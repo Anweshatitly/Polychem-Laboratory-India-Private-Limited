@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Polychem Laboratory (India) Pvt. Ltd.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --red: #CC2229;
+      --blue: #2D9CDB;
+      --navy: #1A2C5B;
+      --white: #FFFFFF;
+      --off-white: #F5F7FA;
+      --light-gray: #E8EDF5;
+      --text: #1a1a2e;
+      --text-muted: #5a6376;
+      --gradient: linear-gradient(135deg, #1A2C5B 0%, #2D9CDB 100%);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--white); overflow-x: hidden; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--light-gray);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw; height: 72px;
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 30px rgba(26,44,91,0.10); }
+    .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+    .nav-logo img { height: 52px; width: 52px; object-fit: contain; }
+    .nav-logo-text { display: flex; flex-direction: column; line-height: 1.15; }
+    .nav-logo-text .n1 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--navy); }
+    .nav-logo-text .n2 { font-size: 0.68rem; color: var(--blue); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.88rem; font-weight: 500; transition: color 0.2s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: var(--red); transform: scaleX(0); transition: transform 0.2s; border-radius: 2px; }
+    .nav-links a:hover { color: var(--navy); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta { background: var(--red); color: white; padding: 10px 22px; border-radius: 6px; font-size: 0.88rem; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+    .nav-cta:hover { background: #a81b21; transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 25px; height: 2px; background: var(--navy); border-radius: 2px; }
+
+    /* ── HERO ── */
+    .hero { min-height: 100vh; background: var(--navy); position: relative; overflow: hidden; display: flex; align-items: center; padding: 120px 6vw 100px; }
+    .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(45,156,219,0.18) 0%, transparent 60%), radial-gradient(ellipse at 10% 80%, rgba(204,34,41,0.12) 0%, transparent 50%); }
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 60px 60px; }
+    .hero-content { position: relative; z-index: 2; max-width: 600px; animation: fadeUp 1s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(45,156,219,0.15); border: 1px solid rgba(45,156,219,0.3); color: var(--blue); padding: 6px 16px; border-radius: 100px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 28px; }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--blue); border-radius: 50%; animation: blink 2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 900; color: white; line-height: 1.08; margin-bottom: 24px; }
+    .hero h1 em { font-style: normal; background: linear-gradient(90deg, var(--blue), #7ec8e3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { color: rgba(255,255,255,0.7); font-size: 1.05rem; line-height: 1.7; margin-bottom: 40px; max-width: 500px; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary { background: var(--red); color: white; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; transition: all 0.2s; }
+    .btn-primary:hover { background: #a81b21; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(204,34,41,0.4); }
+    .btn-outline { background: transparent; color: white; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; border: 1.5px solid rgba(255,255,255,0.3); transition: all 0.2s; }
+    .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.07); }
+    .hero-logo { position: absolute; right: 6vw; top: 50%; transform: translateY(-50%); z-index: 2; animation: float 6s ease-in-out infinite; }
+    .hero-logo img { width: clamp(200px, 26vw, 360px); filter: drop-shadow(0 20px 50px rgba(45,156,219,0.4)); }
+    @keyframes float { 0%,100%{transform:translateY(-50%) translateY(0)} 50%{transform:translateY(-50%) translateY(-16px)} }
+    .hero-stats { position: absolute; bottom: 48px; left: 6vw; display: flex; gap: 48px; z-index: 2; animation: fadeUp 1s 0.5s ease both; opacity: 0; }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: white; line-height: 1; }
+    .stat-lbl { color: rgba(255,255,255,0.45); font-size: 0.75rem; margin-top: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+    /* ── SHARED ── */
+    section { padding: 100px 6vw; }
+    .stag { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); margin-bottom: 12px; }
+    .stitle { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; color: var(--navy); line-height: 1.15; margin-bottom: 16px; }
+    .ssub { color: var(--text-muted); font-size: 1rem; line-height: 1.7; max-width: 560px; }
+
+    /* ── ABOUT ── */
+    #about { background: var(--off-white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
+    .about-card { background: white; border-radius: 20px; padding: 48px 36px; box-shadow: 0 20px 60px rgba(26,44,91,0.08); position: relative; overflow: hidden; text-align: center; }
+    .about-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--red), var(--blue)); }
+    .about-card img { width: 150px; height: 150px; object-fit: contain; margin: 0 auto 24px; display: block; }
+    .about-card h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--navy); margin-bottom: 8px; }
+    .about-card p { color: var(--text-muted); font-size: 0.86rem; line-height: 1.6; }
+    .about-badge { position: absolute; bottom: -16px; right: -16px; background: var(--navy); color: white; padding: 18px 22px; border-radius: 14px; box-shadow: 0 12px 40px rgba(26,44,91,0.25); text-align: center; }
+    .about-badge strong { display: block; font-size: 1.7rem; font-family: 'Playfair Display', serif; }
+    .about-badge span { font-size: 0.72rem; opacity: 0.65; }
+    .about-text p { color: var(--text-muted); line-height: 1.8; margin-bottom: 18px; font-size: 0.97rem; }
+    .highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
+    .hi { display: flex; align-items: flex-start; gap: 12px; background: white; padding: 14px; border-radius: 12px; border: 1px solid var(--light-gray); }
+    .hi-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .bg-r { background: rgba(204,34,41,0.08); }
+    .bg-b { background: rgba(45,156,219,0.08); }
+    .bg-n { background: rgba(26,44,91,0.08); }
+    .bg-g { background: rgba(34,197,94,0.08); }
+    .hi-text strong { display: block; font-size: 0.82rem; color: var(--navy); font-weight: 600; }
+    .hi-text span { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* ── PRODUCTS ── */
+    #products { background: white; }
+    .prod-header { text-align: center; margin-bottom: 20px; }
+    .prod-header .ssub { margin: 0 auto; }
+    .filters { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 48px; }
+    .fbtn { padding: 8px 20px; border-radius: 100px; border: 1.5px solid var(--light-gray); background: white; color: var(--text-muted); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+    .fbtn:hover { border-color: var(--blue); color: var(--blue); }
+    .fbtn.active { background: var(--navy); border-color: var(--navy); color: white; }
+    .prod-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .pcard { background: var(--off-white); border-radius: 16px; overflow: hidden; border: 1px solid var(--light-gray); transition: all 0.3s; display: flex; flex-direction: column; }
+    .pcard:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(26,44,91,0.13); border-color: rgba(45,156,219,0.3); }
+    .pimg { position: relative; overflow: hidden; background: white; }
+    .pimg img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; transition: transform 0.4s; }
+    .pcard:hover .pimg img { transform: scale(1.04); }
+    .pcat { position: absolute; top: 10px; left: 10px; background: var(--navy); color: white; font-size: 0.67rem; font-weight: 700; padding: 3px 10px; border-radius: 100px; letter-spacing: 0.05em; text-transform: uppercase; }
+    .pinfo { padding: 16px 16px 18px; flex: 1; display: flex; flex-direction: column; }
+    .pname { font-family: 'Playfair Display', serif; font-size: 0.98rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .pcomp { font-size: 0.74rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.45; flex: 1; }
+    .pfoot { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+    .pmrp { font-size: 0.8rem; color: var(--text-muted); }
+    .pmrp strong { font-size: 1rem; color: var(--red); font-weight: 700; }
+    .ptag { font-size: 0.68rem; font-weight: 600; padding: 3px 9px; border-radius: 4px; background: rgba(34,197,94,0.1); color: #166534; }
+
+    /* ── SERVICES ── */
+    #services { background: var(--off-white); }
+    .svc-header { text-align: center; margin-bottom: 64px; }
+    .svc-header .ssub { margin: 0 auto; }
+    .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .scard { background: white; border-radius: 18px; padding: 36px 28px; border: 1px solid var(--light-gray); transition: all 0.3s; position: relative; overflow: hidden; }
+    .scard::after { content: ''; position: absolute; inset: 0; background: var(--gradient); opacity: 0; transition: opacity 0.3s; border-radius: 18px; }
+    .scard:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(26,44,91,0.12); }
+    .scard:hover::after { opacity: 1; }
+    .scard:hover .sico, .scard:hover h3, .scard:hover p { position: relative; z-index: 1; }
+    .scard:hover h3 { color: white; }
+    .scard:hover p { color: rgba(255,255,255,0.8); }
+    .scard:hover .sico { background: rgba(255,255,255,0.15); }
+    .sico { width: 54px; height: 54px; border-radius: 14px; background: var(--off-white); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 22px; transition: background 0.3s; position: relative; z-index: 1; }
+    .scard h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--navy); margin-bottom: 10px; font-weight: 700; transition: color 0.3s; position: relative; z-index: 1; }
+    .scard p { color: var(--text-muted); font-size: 0.86rem; line-height: 1.6; transition: color 0.3s; position: relative; z-index: 1; }
+
+    /* ── LEADERSHIP ── */
+    #leadership { background: var(--navy); }
+    .lead-header { text-align: center; margin-bottom: 64px; }
+    .lead-header .stitle { color: white; }
+    .lead-header .ssub { color: rgba(255,255,255,0.6); margin: 0 auto; }
+    .lead-header .stag { color: var(--blue); }
+    .dir-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 860px; margin: 0 auto; }
+    .dcard { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; padding: 36px 28px; text-align: center; transition: all 0.3s; }
+    .dcard:hover { background: rgba(255,255,255,0.09); transform: translateY(-4px); border-color: rgba(45,156,219,0.4); }
+    .davatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--navy)); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.5rem; color: white; margin: 0 auto 20px; border: 3px solid rgba(255,255,255,0.15); font-weight: 700; }
+    .dcard h3 { color: white; font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 6px; }
+    .drole { color: var(--blue); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--off-white); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-top: 60px; }
+    .citem { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+    .cicon { width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    .ci-r { background: rgba(204,34,41,0.08); }
+    .ci-b { background: rgba(45,156,219,0.08); }
+    .citem-text strong { display: block; font-size: 0.8rem; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .citem-text a, .citem-text span { color: var(--navy); font-weight: 600; text-decoration: none; font-size: 0.97rem; }
+    .citem-text a:hover { color: var(--blue); }
+    .socials { display: flex; gap: 12px; margin-top: 28px; }
+    .sl { width: 44px; height: 44px; border-radius: 10px; border: 1.5px solid var(--light-gray); display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.2s; color: var(--navy); }
+    .sl:hover { transform: translateY(-2px); }
+    .sl.fb:hover { background: #1877f2; border-color: #1877f2; color: white; }
+    .sl.ig:hover { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); border-color: transparent; color: white; }
+    .cform { display: flex; flex-direction: column; gap: 16px; }
+    .crow { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .cgroup { display: flex; flex-direction: column; gap: 6px; }
+    .cgroup label { font-size: 0.8rem; font-weight: 600; color: var(--navy); }
+    .cgroup input, .cgroup textarea, .cgroup select { padding: 12px 16px; border-radius: 8px; border: 1.5px solid var(--light-gray); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--text); background: white; outline: none; transition: border 0.2s; }
+    .cgroup input:focus, .cgroup textarea:focus, .cgroup select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(45,156,219,0.1); }
+    .cgroup textarea { resize: vertical; min-height: 100px; }
+    .csub { background: var(--red); color: white; border: none; padding: 14px 32px; border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; align-self: flex-start; }
+    .csub:hover { background: #a81b21; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(204,34,41,0.3); }
+    .csuccess { display: none; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); color: #166534; padding: 14px 18px; border-radius: 8px; font-size: 0.9rem; font-weight: 500; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--navy); padding: 60px 6vw 30px; }
+    .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
+    .foot-logo { height: 60px; width: 60px; object-fit: contain; display: block; margin-bottom: 14px; }
+    .foot-name { font-family: 'Playfair Display', serif; color: white; font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+    .foot-brand p { color: rgba(255,255,255,0.5); font-size: 0.84rem; line-height: 1.7; max-width: 300px; }
+    .foot-col h4 { color: white; font-size: 0.84rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; }
+    .foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .foot-col ul li a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.84rem; transition: color 0.2s; }
+    .foot-col ul li a:hover { color: var(--blue); }
+    .foot-bottom { display: flex; justify-content: space-between; align-items: center; }
+    .foot-bottom p { color: rgba(255,255,255,0.35); font-size: 0.8rem; }
+    .reg { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 4px; color: rgba(255,255,255,0.4); font-size: 0.74rem; }
+
+    /* ── REVEAL ── */
+    .rv { opacity: 0; transform: translateY(28px); transition: opacity 0.6s, transform 0.6s; }
+    .rv.on { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) { .prod-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 900px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .mmenu { display: none; position: fixed; top: 72px; left: 0; right: 0; background: white; padding: 24px 6vw; border-bottom: 1px solid var(--light-gray); z-index: 998; flex-direction: column; gap: 20px; }
+      .mmenu.open { display: flex; }
+      .mmenu a { color: var(--text); text-decoration: none; font-size: 1rem; font-weight: 500; }
+      .hero { padding: 100px 6vw 200px; }
+      .hero-logo { position: absolute; bottom: 80px; right: 6vw; top: auto; transform: none; animation: none; }
+      .hero-logo img { width: 130px; }
+      .hero-stats { bottom: 20px; gap: 24px; flex-wrap: wrap; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-badge { bottom: -10px; right: 10px; }
+      .svc-grid { grid-template-columns: 1fr 1fr; }
+      .dir-grid { grid-template-columns: 1fr; max-width: 300px; }
+      .prod-grid { grid-template-columns: repeat(2, 1fr); }
+      .crow { grid-template-columns: 1fr; }
+      .foot-grid { grid-template-columns: 1fr; gap: 36px; }
+      .foot-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .highlights { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .prod-grid { grid-template-columns: 1fr; }
+      .svc-grid { grid-template-columns: 1fr; }
+      .filters { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a class="nav-logo" href="#">
+    <img src="assets/logo.jpg" alt="Polychem Logo"/>
+    <div class="nav-logo-text">
+      <span class="n1">Polychem Laboratory</span>
+      <span class="n2">India Pvt. Ltd.</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#leadership">Leadership</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get In Touch</a>
+  <div class="hamburger" id="hbg"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="mmenu" id="mmenu">
+  <a href="#about"       onclick="cm()">About</a>
+  <a href="#products"    onclick="cm()">Products</a>
+  <a href="#services"    onclick="cm()">Services</a>
+  <a href="#leadership"  onclick="cm()">Leadership</a>
+  <a href="#contact"     onclick="cm()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Est. 2007 · West Bengal, India</div>
+    <h1>Advancing Health Through <em>Pharmaceutical Innovation</em></h1>
+    <p>Polychem Laboratory (India) Pvt. Ltd. — a trusted name in drug formulation, development, and healthcare solutions, headquartered in Kolkata's Madhyamgram region.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">View Products</a>
+      <a href="#contact"  class="btn-outline">Contact Us</a>
+    </div>
+  </div>
+  <div class="hero-logo">
+    <img src="assets/logo.jpg" alt="Polychem Laboratory"/>
+  </div>
+  <div class="hero-stats">
+    <div><div class="stat-num">17+</div><div class="stat-lbl">Years of Excellence</div></div>
+    <div><div class="stat-num">17+</div><div class="stat-lbl">Products</div></div>
+    <div><div class="stat-num">2007</div><div class="stat-lbl">Established</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="rv" style="position:relative;">
+      <div class="about-card">
+        <img src="assets/logo.jpg" alt="Polychem Logo"/>
+        <h3>Polychem Laboratory (India) Pvt. Ltd.</h3>
+        <p>Private Limited Pharmaceutical Company<br/>CIN Registered · ROC Kolkata</p>
+      </div>
+      <div class="about-badge">
+        <strong>2007</strong>
+        <span>Year Founded</span>
+      </div>
+    </div>
+    <div class="about-text rv">
+      <span class="stag">About Us</span>
+      <h2 class="stitle">Nearly Two Decades of Pharma Excellence</h2>
+      <p>Polychem Laboratory (India) Private Limited is a private limited pharmaceutical company based in West Bengal, India. Established on 15 March 2007, we operate in the field of drug formulation, development, and healthcare-related services.</p>
+      <p>Headquartered in Madhyamgram, Barasat (Kolkata region), we are registered under the Registrar of Companies (ROC), Kolkata, functioning as a company limited by shares with emphasis on quality, compliance, and steady business growth.</p>
+      <div class="highlights">
+        <div class="hi"><div class="hi-icon bg-r">🏢</div><div class="hi-text"><strong>Headquarters</strong><span>Madhyamgram, Barasat, Kolkata</span></div></div>
+        <div class="hi"><div class="hi-icon bg-b">📋</div><div class="hi-text"><strong>Registration</strong><span>ROC Kolkata · Pvt. Ltd.</span></div></div>
+        <div class="hi"><div class="hi-icon bg-n">🏭</div><div class="hi-text"><strong>Sector</strong><span>Pharma & Allied Healthcare</span></div></div>
+        <div class="hi"><div class="hi-icon bg-g">✅</div><div class="hi-text"><strong>Status</strong><span>Active, Non-Government</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="prod-header rv">
+    <span class="stag">Our Portfolio</span>
+    <h2 class="stitle">Our Products</h2>
+    <p class="ssub">A complete range of pharmaceutical and nutraceutical products crafted with quality ingredients for better health outcomes.</p>
+  </div>
+
+  <div class="filters rv">
+    <button class="fbtn active" onclick="fp('all',this)">All Products</button>
+    <button class="fbtn" onclick="fp('infant',this)">Infant Care</button>
+    <button class="fbtn" onclick="fp('digestive',this)">Digestive</button>
+    <button class="fbtn" onclick="fp('respiratory',this)">Respiratory</button>
+    <button class="fbtn" onclick="fp('nutrition',this)">Nutrition & Iron</button>
+    <button class="fbtn" onclick="fp('liver',this)">Liver Health</button>
+  </div>
+
+  <div class="prod-grid" id="pg">
+
+    <div class="pcard rv" data-cat="infant">
+      <div class="pimg"><img src="produscts/ad3.png" alt="aD3 Drops"/><span class="pcat">Infant Care</span></div>
+      <div class="pinfo">
+        <div class="pname">aD3 Drops</div>
+        <div class="pcomp">Vitamin D3 (Cholecalciferol) Oral Drops · 15ml · Boosts Immunity & Bone Development</div>
+        <div class="pfoot"><div class="pmrp">MRP <strong>₹79</strong></div><span class="ptag">Sugar Free</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="digestive">
+      <div class="pimg"><img src="produscts/hydrin.png" alt="Hydrin"/><span class="pcat">Hydration</span></div>
+      <div class="pinfo">
+        <div class="pname">Hydrin Liquio</div>
+        <div class="pcomp">Oral Rehydration Solution · WHO Formula · Sodium, Potassium & Dextrose · Mango Flavour · 200ml</div>
+        <div class="pfoot"><div class="pmrp">MRP <strong>₹28</strong></div><span class="ptag">Sugar Free</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="nutrition">
+      <div class="pimg"><img src="produscts/lycobins.png" alt="Lycobiks Syrup"/><span class="pcat">Nutrition</span></div>
+      <div class="pinfo">
+        <div class="pname">Lycobiks Syrup</div>
+        <div class="pcomp">Multivitamin, Multimineral Syrup with Lycopene · Cardiovascular & Eye Health · 200ml</div>
+        <div class="pfoot"><div class="pmrp">MRP <strong>₹149</strong></div><span class="ptag">Sugar Free</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="digestive">
+      <div class="pimg"><img src="produscts/nocid plus.png" alt="Nocid Plus"/><span class="pcat">Digestive</span></div>
+      <div class="pinfo">
+        <div class="pname">Nocid Plus</div>
+        <div class="pcomp">Magaldrate, Simethicone & Anise Oil · Neutralizes Acid & Relieves Bloating · 200ml</div>
+        <div class="pfoot"><div class="pmrp">MRP <strong>₹112</strong></div><span class="ptag">Sugar Free</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="infant">
+      <div class="pimg"><img src="produscts/pepto p.png" alt="Pepto-P Drops"/><span class="pcat">Infant Care</span></div>
+      <div class="pinfo">
+        <div class="pname">Pepto-P Drops</div>
+        <div class="pcomp">Carminative Mixture with Diastase · Relieves Infant Colic & Gas · 15ml</div>
+        <div class="pfoot"><div class="pmrp">MRP <strong>₹79</strong></div><span class="ptag">Sugar Free</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="digestive">
+      <div class="pimg"><img src="produscts/pepto.png" alt="Pepto Diastase"/><span class="pcat">Digestive</span></div>
+      <div class="pinfo">
+        <div class="pname">Pepto Diastase™</div>
+        <div class="pcomp">Enzyme Syrup with Lipase · Relief from Indigestion & Bloating · Sugar-Free Formula</div>
+        <div class="pfoot"><div class="pmrp">From <strong>₹83</strong></div><span class="ptag">Sugar Free</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="digestive">
+      <div class="pimg"><img src="produscts/perzin 400 (2).png" alt="Perzin-400"/><span class="pcat">Digestive</span></div>
+      <div class="pinfo">
+        <div class="pname">Perzin-400</div>
+        <div class="pcomp">Isabgul, Tricholine Citrate & Sorbitol · Bulk Forming Laxative · 200ml</div>
+        <div class="pfoot"><div class="pmrp">MRP <strong>₹168</strong></div><span class="ptag">Laxative</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="nutrition">
+      <div class="pimg"><img src="produscts/polyfer xt (2).png" alt="Polyfer XT Tablets"/><span class="pcat">Nutrition</span></div>
+      <div class="pinfo">
+        <div class="pname">Polyfer XT Tablets</div>
+        <div class="pcomp">Ferrous Ascorbate, Folic Acid & Zinc · Supports Hemoglobin · 10×10 Tablets</div>
+        <div class="pfoot"><div class="pmrp">MRP <strong>₹117</strong></div><span class="ptag">Iron+Zinc</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="nutrition">
+      <div class="pimg"><img src="produscts/polyfer xt.png" alt="Poly Fer-XT Syrup"/><span class="pcat">Nutrition</span></div>
+      <div class="pinfo">
+        <div class="pname">Poly Fer-XT Syrup</div>
+        <div class="pcomp">Ferrous Gluconate, Folic Acid & Vitamin B₁₂ · Orange Flavour · 200ml</div>
+        <div class="pfoot"><div class="pmrp">MRP <strong>₹215</strong></div><span class="ptag">Sugar Free</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="nutrition">
+      <div class="pimg"><img src="produscts/proto globin.png" alt="Proto Globin Plus"/><span class="pcat">Nutrition</span></div>
+      <div class="pinfo">
+        <div class="pname">Proto Globin Plus</div>
+        <div class="pcomp">Iron with Vitamins, Protein, Lysine & Zinc · Orange Flavour · 100ml</div>
+        <div class="pfoot"><div class="pmrp">MRP <strong>₹178</strong></div><span class="ptag">Sugar Free</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="liver">
+      <div class="pimg"><img src="produscts/py prodin.png" alt="PY-Prodin"/><span class="pcat">Liver Health</span></div>
+      <div class="pinfo">
+        <div class="pname">PY-Prodin</div>
+        <div class="pcomp">Cyproheptadine HCl & Tricholine Citrate Syrup · Liver Dysfunction Relief · 100ml / 200ml</div>
+        <div class="pfoot"><div class="pmrp">From <strong>₹75</strong></div><span class="ptag">Liver Aid</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="respiratory">
+      <div class="pimg"><img src="produscts/resperin d.png" alt="Respesin-D"/><span class="pcat">Respiratory</span></div>
+      <div class="pinfo">
+        <div class="pname">Respesin-D</div>
+        <div class="pcomp">Dextromethorphan HBr, Chlorpheniramine Maleate & Phenylephrine HCl Syrup · 100ml</div>
+        <div class="pfoot"><div class="pmrp">MRP <strong>₹93</strong></div><span class="ptag">Cough Relief</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="respiratory">
+      <div class="pimg"><img src="produscts/resperin junior.png" alt="Respesin Junior"/><span class="pcat">Respiratory</span></div>
+      <div class="pinfo">
+        <div class="pname">Respesin Junior</div>
+        <div class="pcomp">Ambroxol HCl, Levosalbutamol & Guaiphenesin Syrup · 60ml · Strawberry Flavour</div>
+        <div class="pfoot"><div class="pmrp">MRP <strong>₹79</strong></div><span class="ptag">Kids</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="respiratory">
+      <div class="pimg"><img src="produscts/Resperin LS.png" alt="Respesin-LS"/><span class="pcat">Respiratory</span></div>
+      <div class="pinfo">
+        <div class="pname">Respesin-LS</div>
+        <div class="pcomp">Levosalbutamol Sulphate, Ambroxol HCl & Guaiphenesin Syrup · 100ml · Opens Airways</div>
+        <div class="pfoot"><div class="pmrp">MRP <strong>₹107</strong></div><span class="ptag">Sugar Free</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="liver">
+      <div class="pimg"><img src="produscts/tricogen k.png" alt="Tricogen-K"/><span class="pcat">Liver Health</span></div>
+      <div class="pinfo">
+        <div class="pname">Tricogen-K™</div>
+        <div class="pcomp">Choline Citrate, Silymarin & Kalmegh Suspension · Liver Detox · 100ml / 200ml</div>
+        <div class="pfoot"><div class="pmrp">From <strong>₹84</strong></div><span class="ptag">Liver Aid</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="digestive">
+      <div class="pimg"><img src="produscts/ulfeto.png" alt="Ulfate-O"/><span class="pcat">Digestive</span></div>
+      <div class="pinfo">
+        <div class="pname">Ulfate-O Suspension</div>
+        <div class="pcomp">Sucralfate & Oxetacaine Oral Suspension · Rapidly Neutralizes Acid · Orange Flavour · 200ml</div>
+        <div class="pfoot"><div class="pmrp">MRP <strong>₹234</strong></div><span class="ptag">Sugar Free</span></div>
+      </div>
+    </div>
+
+    <div class="pcard rv" data-cat="nutrition">
+      <div class="pimg"><img src="produscts/vyntom f.png" alt="Vytom-F"/><span class="pcat">Nutrition</span></div>
+      <div class="pinfo">
+        <div class="pname">Vytom-F</div>
+        <div class="pcomp">Vitamin B Complex with Lysine · Energy Metabolism & Immune Support · 100ml / 200ml</div>
+        <div class="pfoot"><div class="pmrp">From <strong>₹79</strong></div><span class="ptag">Sugar Free</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="svc-header rv">
+    <span class="stag">What We Do</span>
+    <h2 class="stitle">Our Core Services</h2>
+    <p class="ssub">Delivering end-to-end pharmaceutical solutions with precision, compliance, and a commitment to improving lives.</p>
+  </div>
+  <div class="svc-grid">
+    <div class="scard rv"><div class="sico">🔬</div><h3>Drug Formulation</h3><p>Expert development of pharmaceutical formulations meeting rigorous safety, efficacy, and quality standards for diverse therapeutic needs.</p></div>
+    <div class="scard rv"><div class="sico">⚗️</div><h3>R&D & Development</h3><p>Innovative research and development processes driving the creation of new medicines and improving existing formulations for better patient outcomes.</p></div>
+    <div class="scard rv"><div class="sico">🏥</div><h3>Healthcare Solutions</h3><p>Comprehensive healthcare-related services supporting the pharmaceutical and allied sectors across West Bengal and beyond.</p></div>
+    <div class="scard rv"><div class="sico">✅</div><h3>Quality Compliance</h3><p>Strict adherence to regulatory standards and quality control protocols to ensure every product meets the highest benchmarks of safety.</p></div>
+    <div class="scard rv"><div class="sico">💊</div><h3>Manufacturing</h3><p>State-of-the-art manufacturing activities supporting healthcare needs through efficient, consistent, and reliable production processes.</p></div>
+    <div class="scard rv"><div class="sico">🤝</div><h3>Business Partnerships</h3><p>Building strategic alliances with healthcare providers, distributors, and allied sectors to broaden our reach and impact.</p></div>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section id="leadership">
+  <div class="lead-header rv">
+    <span class="stag">Our Team</span>
+    <h2 class="stitle">Leadership & Directors</h2>
+    <p class="ssub">Guided by experienced directors committed to pharmaceutical innovation and sustainable business growth.</p>
+  </div>
+  <div class="dir-grid">
+    <div class="dcard rv"><div class="davatar">DR</div><h3>Diptayan Ray</h3><span class="drole">Director</span></div>
+    <div class="dcard rv"><div class="davatar">SR</div><h3>Smriti Ray</h3><span class="drole">Director</span></div>
+    <div class="dcard rv"><div class="davatar">DKR</div><h3>Dilip Kumar Ray</h3><span class="drole">Director</span></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div style="text-align:center;margin-bottom:60px;" class="rv">
+    <span class="stag">Get In Touch</span>
+    <h2 class="stitle">We'd Love To Hear From You</h2>
+    <p class="ssub" style="margin:0 auto;">Reach out for enquiries, partnerships, or to learn more about our products and services.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="rv">
+      <div class="citem">
+        <div class="cicon ci-r">📞</div>
+        <div class="citem-text"><strong>Phone</strong><a href="tel:+918017766196">80177 66196</a></div>
+      </div>
+      <div class="citem">
+        <div class="cicon ci-b">📍</div>
+        <div class="citem-text"><strong>Address</strong><span>Madhyamgram, Barasat, Kolkata, West Bengal, India</span></div>
+      </div>
+      <div class="socials">
+        <a href="https://www.facebook.com/share/1DD7hajRSq/" target="_blank" class="sl fb" title="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/polychemlab?igsh=MWE5aXoyY2xmemV6OA==" target="_blank" class="sl ig" title="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="rv">
+      <form class="cform" onsubmit="sf(event)">
+        <div class="crow">
+          <div class="cgroup"><label>Full Name *</label><input type="text" placeholder="Your name" required/></div>
+          <div class="cgroup"><label>Phone Number</label><input type="tel" placeholder="+91 XXXXX XXXXX"/></div>
+        </div>
+        <div class="cgroup"><label>Email Address *</label><input type="email" placeholder="your@email.com" required/></div>
+        <div class="cgroup"><label>Subject</label>
+          <select><option value="">Select a subject</option><option>Product Enquiry</option><option>Business Partnership</option><option>General Information</option><option>Other</option></select>
+        </div>
+        <div class="cgroup"><label>Message *</label><textarea placeholder="Tell us how we can help you..." required></textarea></div>
+        <button type="submit" class="csub">Send Message →</button>
+        <div class="csuccess" id="csucc">✅ Thank you! We'll get back to you shortly.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <img src="assets/logo.jpg" alt="Polychem Logo" class="foot-logo"/>
+      <div class="foot-name">Polychem Laboratory (India) Pvt. Ltd.</div>
+      <p>Advancing healthcare through pharmaceutical innovation since 2007. Headquartered in Madhyamgram, Kolkata.</p>
+      <div style="display:flex;gap:10px;margin-top:18px;">
+        <a href="https://www.facebook.com/share/1DD7hajRSq/" target="_blank" style="width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='#1877f2';this.style.color='white'" onmouseout="this.style.background='transparent';this.style.color='rgba(255,255,255,0.5)'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/polychemlab?igsh=MWE5aXoyY2xmemV6OA==" target="_blank" style="width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='#e1306c';this.style.color='white'" onmouseout="this.style.background='transparent';this.style.color='rgba(255,255,255,0.5)'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#leadership">Leadership</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Contact Us</h4>
+      <ul>
+        <li><a href="tel:+918017766196">📞 80177 66196</a></li>
+        <li><a href="https://www.facebook.com/share/1DD7hajRSq/" target="_blank">📘 Facebook</a></li>
+        <li><a href="https://www.instagram.com/polychemlab?igsh=MWE5aXoyY2xmemV6OA==" target="_blank">📸 Instagram</a></li>
+        <li><a href="#contact">✉️ Send Message</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2025 Polychem Laboratory (India) Pvt. Ltd. All rights reserved.</p>
+    <span class="reg">ROC Kolkata · Est. 15 March 2007</span>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+  // Hamburger
+  document.getElementById('hbg').addEventListener('click', () => {
+    document.getElementById('mmenu').classList.toggle('open');
+  });
+  function cm() { document.getElementById('mmenu').classList.remove('open'); }
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('on'), (i % 5) * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+  // Product filter
+  function fp(cat, btn) {
+    document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.pcard').forEach(c => {
+      c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
+    });
+  }
+  // Contact form
+  function sf(e) {
+    e.preventDefault();
+    document.getElementById('csucc').style.display = 'block';
+    e.target.reset();
+    setTimeout(() => { document.getElementById('csucc').style.display = 'none'; }, 5000);
+  }
+  // Hero stats fade in
+  window.addEventListener('load', () => {
+    document.querySelector('.hero-stats').style.opacity = '1';
+  });
+</script>
+</body>
+</html>
